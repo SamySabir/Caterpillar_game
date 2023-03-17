@@ -7,6 +7,36 @@ public class MyDoublyLinkedList<E> extends MyLinkedList<E> {
 
 	private DNode head;
 	private DNode tail;
+	private DNode dummyHead;
+	private DNode dummyTail;
+
+	public MyDoublyLinkedList() {
+		dummyHead = new DNode();
+		dummyTail = new DNode();
+		dummyHead.next = dummyTail;
+		dummyTail.prev = dummyHead;
+	}
+
+	public DNode getNode(int i) {
+		DNode node;
+		if (i < size/2) {
+			node = dummyHead.next;
+			for (int k = 0; k < i; k++) {
+				node = node.next;
+			}
+		} else {
+			node = dummyTail.prev;
+			for (int k = size-1; k > i; k--) {
+				node = node.prev;
+			}
+		}
+		return node;
+	}
+
+	public E get(int i) {
+		DNode node = getNode(i);
+		return node.element;
+	}
 
 	@Override
 	public boolean add(E e) {
@@ -84,10 +114,16 @@ public class MyDoublyLinkedList<E> extends MyLinkedList<E> {
 	}
 
 	public E peekFirst() {
+		if (this.isEmpty()) {
+			throw new NoSuchElementException();
+		}
 		return head.element;
 	}
 
 	public E peekLast() {
+		if (this.isEmpty()) {
+			throw new NoSuchElementException();
+		}
 		return tail.element;
 	}
 
@@ -95,8 +131,36 @@ public class MyDoublyLinkedList<E> extends MyLinkedList<E> {
 	public void clear() {
 		while (this.size != 0) {
 			this.removeLast();
-			this.size--;
 		}
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof MyDoublyLinkedList)) {
+			return false;
+		}
+		MyDoublyLinkedList<E> x = (MyDoublyLinkedList<E>) obj;
+		if (this.isEmpty() && x.isEmpty()) {
+			return true;
+		}
+		DNode thisNode = head;
+		DNode otherNode = x.head;
+		if (this.getSize() == x.getSize()) {
+			Iterator<E> iter1 = this.iterator();
+			Iterator<E> iter2 = x.iterator();
+			while (iter1.hasNext()) {
+				if(!(thisNode.element.equals(otherNode.element))) {
+					return false;
+				}
+				thisNode.element = iter1.next();
+				otherNode.element = iter2.next();
+			} return true;
+		}
+		return false;
 	}
 
 	private class DNode {
