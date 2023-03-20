@@ -34,14 +34,14 @@ public class MyQueue<E> {
     }
 
     public boolean equals(Object obj) {
+        if (!(obj instanceof MyQueue)) return false;
         if (this == obj) return true;
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof MyQueue)) {
-            return false;
-        }
+        if (obj == null) return false;
         MyQueue<E> x = (MyQueue<E>) obj;
-        return this.queue.equals(x);
+        return this.queue.equals(x.queue);
+    }
+
+    public int getSize() {
+        return this.queue.getSize();
     }
 }

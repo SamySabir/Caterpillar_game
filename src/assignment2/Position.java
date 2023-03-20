@@ -5,6 +5,9 @@ public class Position {
     private int y;
 
     public Position(int x, int y) {
+        if (x < 0 || y < 0) {
+            throw new IllegalArgumentException("Negative coordinates");
+        }
         this.x = x;
         this.y = y;
     }
@@ -41,18 +44,30 @@ public class Position {
     }
 
     public void moveWest() {
+        if (this.getX() == 0) {
+            throw new IllegalStateException("already at border");
+        }
         this.x--;
     }
 
-    public void moveEest() {
+    public void moveEast() {
+        if (this.getX() == (Math.pow(2,31) - 1)) {
+            throw new IllegalStateException("already at border");
+        }
         this.x++;
     }
 
     public void moveNorth() {
+        if (this.getY() == 0) {
+            throw new IllegalStateException("already at border");
+        }
         this.y--;
     }
 
     public void moveSouth() {
+        if (this.getY() == (Math.pow(2,31) - 1)) {
+            throw new IllegalStateException("already at border");
+        }
         this.y++;
     }
 

@@ -12,9 +12,6 @@ public abstract class MyLinkedList<E> implements MyList<E> {
     }
 
     public int getSize(){
-        for(E e: this) {
-            this.size++;
-        }
         return this.size;
     }
 }

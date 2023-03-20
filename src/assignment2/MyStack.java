@@ -2,7 +2,7 @@ package assignment2;
 
 import java.util.NoSuchElementException;
 
-public class MyStack<E> extends MyDoublyLinkedList {
+public class MyStack<E> {
     private MyDoublyLinkedList<E> stack;
 
     public MyStack() {
@@ -13,24 +13,23 @@ public class MyStack<E> extends MyDoublyLinkedList {
         if (element == null){
             return false;
         }
-        return this.addFirst(element);
+        return this.stack.addFirst(element);
     }
 
     public E pop(){
         if (this.isEmpty()){
             throw new NoSuchElementException("The Stack is empty");
         }
-        return (E) this.removeFirst();
+        return this.stack.removeFirst();
     }
 
     public E peek(){
         if (this.isEmpty()){
             throw new NoSuchElementException("The Stack is empty");
         }
-        return (E) this.peekFirst();
+        return this.stack.peekFirst();
     }
 
-    @Override
     public boolean isEmpty() {
         return this.stack.isEmpty();
     }
@@ -41,5 +40,13 @@ public class MyStack<E> extends MyDoublyLinkedList {
 
     public int getSize() {
         return this.stack.size;
+    }
+
+    public static void main(String[] args) {
+        MyStack<String> stack = new MyStack<String>();
+        stack.stack.add("2");
+        stack.stack.add("2");
+        stack.push("3");
+        System.out.println(stack.getSize());
     }
 }

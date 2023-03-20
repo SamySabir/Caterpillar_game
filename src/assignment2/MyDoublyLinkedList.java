@@ -39,19 +39,20 @@ public class MyDoublyLinkedList<E> extends MyLinkedList<E> {
 	}
 
 	@Override
-	public boolean add(E e) {
+	public boolean add(E element) {
 		DNode newNode = new DNode();
-		newNode.element = e;
-		if (e == null) {
+		newNode.element = element;
+		newNode.next = null;
+		newNode.prev = this.tail;
+		if (element == null) {
 			return false;
-		} else if (head == null) {
-			head = newNode;
-			tail = newNode;
+		} else if (this.tail != null) {
+			this.tail.next = newNode;
 		} else {
-			newNode.prev = tail;
-			tail.next = newNode;
-			tail = newNode;
+			this.head = newNode;
 		}
+		this.tail = newNode;
+		this.size++;
 		return true;
 	}
 
@@ -62,11 +63,11 @@ public class MyDoublyLinkedList<E> extends MyLinkedList<E> {
 		}
 		DNode temp = tail;
 		if (this.size == 1) {
-			head = null;
+			this.head = null;
 		} else {
 			tail.prev.next = null;
 		}
-		tail = tail.prev;
+		this.tail = tail.prev;
 		temp.prev = null;
 		this.size--;
 		return temp.element;
@@ -79,12 +80,13 @@ public class MyDoublyLinkedList<E> extends MyLinkedList<E> {
 		DNode newNode = new DNode();
 		newNode.element = element;
 		newNode.next = head;
-		head.prev = newNode;
+		newNode.prev = null;
 		if (head == null) {
-			tail = newNode;
-			head.prev = null;
+			this.tail = newNode;
+		} else {
+			head.prev = newNode;
 		}
-		head = newNode;
+		this.head = newNode;
 		this.size++;
 		return true;
 	}
@@ -99,12 +101,13 @@ public class MyDoublyLinkedList<E> extends MyLinkedList<E> {
 		}
 		DNode temp = head;
 		if (this.size == 1) {
-			tail = null;
+			this.tail = null;
 		} else {
 			head.next.prev = null;
 		}
-		head = head.next;
+		this.head = head.next;
 		temp.next = null;
+		temp.prev = null;
 		this.size--;
 		return temp.element;
 	}
@@ -117,14 +120,14 @@ public class MyDoublyLinkedList<E> extends MyLinkedList<E> {
 		if (this.isEmpty()) {
 			throw new NoSuchElementException();
 		}
-		return head.element;
+		return this.head.element;
 	}
 
 	public E peekLast() {
 		if (this.isEmpty()) {
 			throw new NoSuchElementException();
 		}
-		return tail.element;
+		return this.tail.element;
 	}
 
 	@Override
